@@ -1,0 +1,28 @@
+version: "3"
+volumes:
+  mysqlnode:
+networks:
+  backend:  
+services:
+  mysql:
+    image: "mysql:5.7"
+    volumes:
+        - mysqlnode:/var/lib/mysql
+        - ./scripts:/docker-entrypoint-initdb.d
+    networks:
+        - backend
+    environment:
+        - MYSQL_ROOT_PASSWORD=test
+        - bind-address=0.0.0.0       
+
+  app:
+    build: .
+    command: npm start
+    networks:
+      - backend
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql  
