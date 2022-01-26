@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps{
-            	echo 'test docker'
+            	echo 'test docker up'
                 bat 'docker-compose up'
             }
         }
